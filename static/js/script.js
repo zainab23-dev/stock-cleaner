@@ -1,0 +1,1 @@
+console.log("Stock Watch Django App loaded");

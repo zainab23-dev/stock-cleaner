@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Trash{% endblock %}
+{% block content %}
+<h1>Trash Bin</h1>
+<div id="trash-table"></div>
+{% endblock %}
+{% block scripts %}
+<script>
+const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+const trashTable = new Tabulator("#trash-table", {
+    ajaxURL: "/api/trash/items/?format=json",
+    ajaxConfig: {headers: {'X-CSRFToken': csrftoken}},
+    pagination: true,
+    layout: "fitColumns",
+    columns: [
+        {title: "ID", field: "id", width: 80},
+        {title: "Data", field: "data", formatter: function(cell) {
+            return JSON.stringify(cell.getValue());
+        }},
+        {title: "Deleted At", field: "deleted_at", width: 200},
+        {title: "Actions", formatter: function(cell) {
+            const row = cell.getRow().getData();
+            return `<button class="btn btn-sm btn-warning" onclick="restoreItem(${row.id})">Restore</button>`;
+        }, width: 120, headerSort: false}
+    ]
+});
+
+async function restoreItem(trashId) {
+    const response = await fetch(`/trash/restore/${trashId}/`, {
+        method: 'POST',
+        headers: {'X-CSRFToken': csrftoken}
+    });
+    const result = await response.json();
+    if (response.ok) {
+        alert(result.message);
+        trashTable.setData();
+    } else {
+        alert(result.error || 'Restore failed');
+    }
+}
+</script>
+{% endblock %}

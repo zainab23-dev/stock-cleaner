@@ -1,0 +1,23 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.tabulator {
+    font-size: 14px;
+}
+
+.tabulator .tabulator-header .tabulator-col {
+    background-color: #e9ecef;
+}
+
+#upload-area {
+    transition: background-color 0.3s;
+}
+
+#upload-area:hover {
+    background-color: #f0f8ff;
+}
