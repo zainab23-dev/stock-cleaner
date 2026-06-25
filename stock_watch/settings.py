@@ -113,9 +113,19 @@ RETENTION_DAYS = 90
 CORS_ALLOW_ALL_ORIGINS = True
 
 
+
+import os
+
+if os.environ.get('VERCEL') == '1':
+    DB_PATH = '/tmp/db.sqlite3'
+else:
+    DB_PATH = BASE_DIR / 'db.sqlite3'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/db.sqlite3',
+        'NAME': DB_PATH,
     }
+}
+
 }
