@@ -1,15 +1,9 @@
 ﻿{
-  "version": 2,
-  "builds": [
-    {
-      "src": "stock_watch/wsgi.py",
-      "use": "@vercel/python"
-    }
-  ],
+  "buildCommand": "python manage.py collectstatic --noinput && python manage.py migrate",
+  "startCommand": "gunicorn stock_watch.wsgi:application",
+  "outputDirectory": "staticfiles",
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "stock_watch/wsgi.py"
-    }
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/(.*)", "dest": "stock_watch/wsgi.py" }
   ]
 }

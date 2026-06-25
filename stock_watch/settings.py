@@ -59,12 +59,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stock_watch.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/db.sqlite3',
-    }
-}
+
 
 
 
@@ -117,3 +112,10 @@ RETENTION_DAYS = 90
 
 CORS_ALLOW_ALL_ORIGINS = True
 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/db.sqlite3',
+    }
+}

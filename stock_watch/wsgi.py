@@ -4,7 +4,7 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stock_watch.settings')
 
-# ---- Cold‑start setup (runs once per container) ----
+# ---- Cold‑start: create /tmp/db.sqlite3 if missing ----
 import django
 django.setup()
 
@@ -14,10 +14,7 @@ from apps.accounts.models import User
 FLAG_FILE = '/tmp/db_initialised'
 
 if not os.path.exists(FLAG_FILE):
-    # Database file doesn't exist → create it and apply migrations
     call_command('migrate', '--noinput')
-
-    # Ensure admin user exists
     if not User.objects.filter(username='admin').exists():
         User.objects.create_superuser(
             username='admin',
@@ -25,8 +22,6 @@ if not os.path.exists(FLAG_FILE):
             password='admin123',
             role='Admin'
         )
-
-    # Mark as initialised to avoid repeating on subsequent warm requests
     with open(FLAG_FILE, 'w') as f:
         f.write('done')
 # -------------------------------------------------------
