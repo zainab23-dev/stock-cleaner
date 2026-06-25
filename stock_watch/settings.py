@@ -61,8 +61,9 @@ WSGI_APPLICATION = 'stock_watch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/tmp/db.sqlite3',   # writable on Vercel
     }
+}
 }
 
 AUTH_PASSWORD_VALIDATORS = []
@@ -112,3 +113,4 @@ WEBHOOK_URL = ''
 RETENTION_DAYS = 90
 
 CORS_ALLOW_ALL_ORIGINS = True
+
