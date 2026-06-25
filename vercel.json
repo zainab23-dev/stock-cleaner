@@ -1,8 +1,15 @@
 ﻿{
-  "buildCommand": "bash build.sh",
-  "outputDirectory": "staticfiles",
+  "version": 2,
+  "builds": [
+    {
+      "src": "stock_watch/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
   "routes": [
-    { "src": "/static/(.*)", "dest": "/static/$1" },
-    { "src": "/(.*)", "dest": "stock_watch/wsgi.py" }
+    {
+      "src": "/(.*)",
+      "dest": "stock_watch/wsgi.py"
+    }
   ]
 }
